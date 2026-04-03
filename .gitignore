@@ -1,0 +1,7 @@
+build/
+site/
+.idea/
+.venv/
+__pycache__/
+*.pyc
+.DS_Store

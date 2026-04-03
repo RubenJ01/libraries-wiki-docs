@@ -1,0 +1,41 @@
+site_name: RJDS — Documentation
+theme:
+  name: material
+  palette:
+  - scheme: default
+    primary: indigo
+    toggle:
+      icon: material/brightness-7
+      name: Switch to dark
+  - scheme: slate
+    primary: indigo
+    toggle:
+      icon: material/brightness-4
+      name: Switch to light
+  features:
+  - content.code.copy
+markdown_extensions:
+- pymdownx.highlight:
+    anchor_linenums: true
+    line_spans: __span
+    pygments_lang_class: true
+- pymdownx.superfences: {}
+- tables
+nav:
+- Home: index.md
+- Projects:
+  - php-humanize:
+    - Home: projects/php-humanize/index.md
+    - Built in Formatter Names: projects/php-humanize/Built-in-Formatter-Names.md
+    - Custom Formatters: projects/php-humanize/Custom-Formatters.md
+    - Data Rate: projects/php-humanize/Data-Rate.md
+    - Date Formatting: projects/php-humanize/Date-Formatting.md
+    - Duration: projects/php-humanize/Duration.md
+    - File Size: projects/php-humanize/File-Size.md
+    - Installation: projects/php-humanize/Installation.md
+    - List Joining: projects/php-humanize/List-Joining.md
+    - Numbers: projects/php-humanize/Numbers.md
+    - Ordinals: projects/php-humanize/Ordinals.md
+    - Pluralization: projects/php-humanize/Pluralization.md
+    - Text Truncation: projects/php-humanize/Text-Truncation.md
+    - Time Difference: projects/php-humanize/Time-Difference.md
