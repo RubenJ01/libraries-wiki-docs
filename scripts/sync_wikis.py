@@ -181,13 +181,32 @@ def copy_wiki_to_docs(wiki_dir: Path, target: Path) -> list[str]:
     return sorted(set(rel_paths), key=lambda s: (0 if s.endswith("/index.md") or s.endswith("index.md") else 1, s))
 
 
+def _nav_page_title(rel_path: str) -> str:
+    stem = Path(rel_path).stem
+    if stem.lower() == "index":
+        return "Home"
+    return stem.replace("-", " ")
+
+
 def nav_entry_for_repo(slug: str, doc_paths: list[str]) -> dict:
-    index_path = f"projects/{slug}/index.md"
-    if index_path in doc_paths:
-        return {slug: index_path}
     prefix = f"projects/{slug}/"
-    fallbacks = [p for p in doc_paths if p.startswith(prefix)]
-    return {slug: fallbacks[0]} if fallbacks else {slug: index_path}
+    pages = sorted(
+        [p for p in doc_paths if p.startswith(prefix) and p.lower().endswith(".md")],
+        key=lambda p: (0 if Path(p).stem.lower() == "index" else 1, p.lower()),
+    )
+    index_path = f"{prefix}index.md"
+    if not pages:
+        return {slug: index_path}
+    if len(pages) == 1:
+        return {slug: pages[0]}
+    children: list = []
+    if index_path in pages:
+        children.append(index_path)
+        rest = [p for p in pages if p != index_path]
+    else:
+        rest = list(pages)
+    children.extend({_nav_page_title(p): p} for p in rest)
+    return {slug: children}
 
 
 def write_mkdocs(settings: dict, nav_projects: list) -> None:
@@ -205,7 +224,10 @@ def write_mkdocs(settings: dict, nav_projects: list) -> None:
                 {"scheme": "default", "primary": "indigo", "toggle": {"icon": "material/brightness-7", "name": "Switch to dark"}},
                 {"scheme": "slate", "primary": "indigo", "toggle": {"icon": "material/brightness-4", "name": "Switch to light"}},
             ],
-            "features": ["content.code.copy"],
+            "features": [
+                "content.code.copy",
+                "navigation.indexes",
+            ],
         },
         "markdown_extensions": [
             {
