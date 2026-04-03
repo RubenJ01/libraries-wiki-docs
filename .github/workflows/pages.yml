@@ -3,11 +3,10 @@ name: Sync wikis and publish Pages
 on:
   push:
     branches: [main]
-  workflow_dispatch:
   schedule:
-    - cron: "0 * * * *"
-  repository_dispatch:
-    types: [wikis_updated]
+    # Daily wiki sync (UTC)
+    - cron: "0 6 * * *"
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -20,7 +19,14 @@ concurrency:
 
 jobs:
   build:
+    # Skip duplicate run when the scheduled job pushes a [skip ci] sync commit
+    if: |
+      github.event_name != 'push' ||
+      github.event.head_commit == null ||
+      !contains(github.event.head_commit.message, '[skip ci]')
     runs-on: ubuntu-latest
+    outputs:
+      should_deploy: ${{ github.event_name != 'schedule' || steps.commit.outputs.sync_committed == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -37,7 +43,9 @@ jobs:
         run: python scripts/sync_wikis.py
 
       - name: Commit and push if wikis changed
+        id: commit
         run: |
+          echo "sync_committed=false" >> "$GITHUB_OUTPUT"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add docs/projects mkdocs.yml docs/index.md
@@ -61,19 +69,23 @@ jobs:
             else
               MSG="docs: sync GitHub wikis"
             fi
-            git commit -m "$MSG"
+            git commit -m "${MSG} [skip ci]"
             git push
+            echo "sync_committed=true" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Build MkDocs
+        if: github.event_name != 'schedule' || steps.commit.outputs.sync_committed == 'true'
         run: mkdocs build
 
       - uses: actions/upload-pages-artifact@v3
+        if: github.event_name != 'schedule' || steps.commit.outputs.sync_committed == 'true'
         with:
           path: site
 
   deploy:
     needs: build
+    if: needs.build.outputs.should_deploy == 'true'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
