@@ -13,6 +13,8 @@ from pathlib import Path
 
 import yaml
 
+from packagist_page import write_home_md
+
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 PROJECTS = DOCS / "projects"
@@ -179,25 +181,13 @@ def copy_wiki_to_docs(wiki_dir: Path, target: Path) -> list[str]:
     return sorted(set(rel_paths), key=lambda s: (0 if s.endswith("/index.md") or s.endswith("index.md") else 1, s))
 
 
-def nav_entry_for_repo(slug: str, doc_paths: list[str]) -> dict | str:
+def nav_entry_for_repo(slug: str, doc_paths: list[str]) -> dict:
+    index_path = f"projects/{slug}/index.md"
+    if index_path in doc_paths:
+        return {slug: index_path}
     prefix = f"projects/{slug}/"
-    paths = [p for p in doc_paths if p.startswith(prefix)]
-    if not paths:
-        return slug
-
-    def title_for(rel: str) -> str:
-        name = Path(rel).name
-        if name.lower() == "index.md":
-            return "Home"
-        return Path(rel).stem.replace("-", " ").replace("_", " ")
-
-    if len(paths) == 1:
-        return {slug: paths[0]}
-
-    children: list[dict] = []
-    for rel in sorted(paths, key=lambda p: (0 if p.endswith("index.md") else 1, p.lower())):
-        children.append({title_for(rel): rel})
-    return {slug: children}
+    fallbacks = [p for p in doc_paths if p.startswith(prefix)]
+    return {slug: fallbacks[0]} if fallbacks else {slug: index_path}
 
 
 def write_mkdocs(settings: dict, nav_projects: list) -> None:
@@ -205,8 +195,7 @@ def write_mkdocs(settings: dict, nav_projects: list) -> None:
     site_url = settings.get("site_url") or ""
 
     nav: list = [{"Home": "index.md"}]
-    if nav_projects:
-        nav.append({"Projects": nav_projects})
+    nav.extend(sorted(nav_projects, key=lambda d: next(iter(d)).lower()))
 
     cfg: dict = {
         "site_name": site_name,
@@ -252,6 +241,7 @@ def main() -> None:
     repos = github_public_repos(user)
     nav_projects: list = []
     synced = 0
+    synced_repo_names: list[str] = []
 
     for repo in repos:
         name = repo["name"]
@@ -271,9 +261,11 @@ def main() -> None:
                 print(f"skip (no pages): {name}")
                 continue
             nav_projects.append(nav_entry_for_repo(name, paths))
+            synced_repo_names.append(name)
             synced += 1
             print(f"synced: {name} ({len(paths)} page(s))")
 
+    write_home_md(settings, synced_repo_names)
     write_mkdocs(settings, nav_projects)
     print(f"\nWrote {MKDOCS_PATH} ({synced} wiki(s)).")
 

@@ -40,19 +40,26 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/projects mkdocs.yml
+          git add docs/projects mkdocs.yml docs/index.md
           if git diff --staged --quiet; then
             echo "No wiki changes to commit."
           else
             LIST=$(git diff --cached --name-only | grep '^docs/projects/' | cut -d/ -f3 | sort -u | grep . || true)
             N=$(echo "$LIST" | grep -c '^' || true)
-            if [ -z "$LIST" ]; then
-              MSG="docs: sync GitHub wikis"
-            elif [ "$N" -eq 1 ]; then
-              MSG="docs: sync wiki ${LIST}"
+            HOME=0
+            git diff --cached --name-only | grep -q '^docs/index.md$' && HOME=1 || true
+            if [ -n "$LIST" ]; then
+              if [ "$N" -eq 1 ]; then
+                MSG="docs: sync wiki ${LIST}"
+              else
+                REPOS=$(echo "$LIST" | paste -sd, - | sed 's/,/, /g')
+                MSG="docs: sync wikis ${REPOS}"
+              fi
+              [ "$HOME" -eq 1 ] && MSG="${MSG} + home"
+            elif [ "$HOME" -eq 1 ]; then
+              MSG="docs: update home"
             else
-              REPOS=$(echo "$LIST" | paste -sd, - | sed 's/,/, /g')
-              MSG="docs: sync wikis ${REPOS}"
+              MSG="docs: sync GitHub wikis"
             fi
             git commit -m "$MSG"
             git push

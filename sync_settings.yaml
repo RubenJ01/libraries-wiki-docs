@@ -1,3 +1,6 @@
 github_user: RubenJ01
 site_name: RJDS — Documentation
 site_url: ""
+docs_repo: libraries-wiki-docs
+packagist_vendor: rjds
+packagist_contact: ""
