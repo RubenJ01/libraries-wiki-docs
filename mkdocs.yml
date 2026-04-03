@@ -24,3 +24,5 @@ markdown_extensions:
 nav:
 - Home: index.md
 - php-humanize: projects/php-humanize/index.md
+repo_url: https://github.com/RubenJ01/libraries-wiki-docs
+repo_name: RubenJ01/libraries-wiki-docs

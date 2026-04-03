@@ -11,7 +11,7 @@ python -m venv .venv
 .venv\Scripts\mkdocs serve
 ```
 
-`sync_settings.yaml`: `github_user`, `docs_repo` (this repo name, for the clone URL on the home page), `site_name`, `site_url`, `packagist_vendor`, optional `packagist_contact` (email for Packagist’s API user-agent).
+`sync_settings.yaml`: `github_user`, `docs_repo` (used for the GitHub link in the Material header and for defaults), `site_name`, `site_url`, `packagist_vendor`, optional `packagist_contact`. Optional overrides: `repo_url`, `repo_name` if the docs repo isn’t `github_user`/`docs_repo`.
 
 Sidebar: **Home** plus **one link per wiki** (home page of that wiki only; deeper pages are linked inside the wiki).
 

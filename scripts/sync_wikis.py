@@ -220,6 +220,15 @@ def write_mkdocs(settings: dict, nav_projects: list) -> None:
         ],
         "nav": nav,
     }
+    gh_user = settings.get("github_user") or "RubenJ01"
+    docs_repo = (settings.get("docs_repo") or "").strip()
+    repo_url = (settings.get("repo_url") or "").strip()
+    repo_name = (settings.get("repo_name") or "").strip()
+    if not repo_url and docs_repo:
+        repo_url = f"https://github.com/{gh_user}/{docs_repo}"
+    if repo_url:
+        cfg["repo_url"] = repo_url
+        cfg["repo_name"] = repo_name or (f"{gh_user}/{docs_repo}" if docs_repo else "GitHub")
     if site_url:
         cfg["site_url"] = site_url
 
