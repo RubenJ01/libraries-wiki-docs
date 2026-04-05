@@ -24,6 +24,13 @@ markdown_extensions:
 - tables
 nav:
 - Home: index.md
+- php-dto:
+  - projects/php-dto/index.md
+  - ArrayOf: projects/php-dto/ArrayOf.md
+  - CastTo: projects/php-dto/CastTo.md
+  - DtoMapper: projects/php-dto/DtoMapper.md
+  - Installation: projects/php-dto/Installation.md
+  - MapFrom: projects/php-dto/MapFrom.md
 - php-humanize:
   - projects/php-humanize/index.md
   - Built in Formatter Names: projects/php-humanize/Built-in-Formatter-Names.md
