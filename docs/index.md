@@ -17,5 +17,5 @@ All listed packages: [`rjds/…` on Packagist](https://packagist.org/search/?q=r
 | Project | Latest | Updated | Installs (total / mo) | Composer | Wiki |
 | --- | --- | --- | ---: | --- | :---: |
 | [`php-dto`](https://github.com/RubenJ01/php-dto) | `1.1.0` | 2026-03-24 | 51 / 51 | [`rjds/php-dto`](https://packagist.org/packages/rjds%2Fphp-dto) | [docs](projects/php-dto/index.md) |
-| [`php-humanize`](https://github.com/RubenJ01/php-humanize) | `3.0.0` | 2026-03-31 | 520 / 520 | [`rjds/php-humanize`](https://packagist.org/packages/rjds%2Fphp-humanize) | [docs](projects/php-humanize/index.md) |
+| [`php-humanize`](https://github.com/RubenJ01/php-humanize) | `3.0.0` | 2026-03-31 | 545 / 545 | [`rjds/php-humanize`](https://packagist.org/packages/rjds%2Fphp-humanize) | [docs](projects/php-humanize/index.md) |
 | [`php-slugify`](https://github.com/RubenJ01/php-slugify) | `2.2.0` | 2026-03-21 | 0 / 0 | [`rjds/php-slugify`](https://packagist.org/packages/rjds%2Fphp-slugify) | [docs](projects/php-slugify/index.md) |
