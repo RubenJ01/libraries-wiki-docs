@@ -28,7 +28,7 @@ jobs:
     outputs:
       should_deploy: ${{ github.event_name != 'schedule' || steps.commit.outputs.sync_committed == 'true' }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.ref }}
 
