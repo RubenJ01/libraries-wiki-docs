@@ -17,7 +17,7 @@ All listed packages: [`rjds/…` on Packagist](https://packagist.org/search/?q=r
 | Project | Latest | Updated | Installs (total / mo) | Composer | Wiki |
 | --- | --- | --- | ---: | --- | :---: |
 | [`magento2-module-disable-captcha`](https://github.com/RubenJ01/magento2-module-disable-captcha) | `1.0.1` | 2026-04-10 | 9 / 2 | [`rjds/magento2-module-captcha-disable`](https://packagist.org/packages/rjds%2Fmagento2-module-captcha-disable) | — |
-| [`magento2-module-log-viewer`](https://github.com/RubenJ01/magento2-module-log-viewer) | `1.1.0` | 2026-05-05 | 87 / 68 | [`rjds/magento2-module-log-viewer`](https://packagist.org/packages/rjds%2Fmagento2-module-log-viewer) | — |
+| [`magento2-module-log-viewer`](https://github.com/RubenJ01/magento2-module-log-viewer) | `1.1.0` | 2026-05-05 | 95 / 75 | [`rjds/magento2-module-log-viewer`](https://packagist.org/packages/rjds%2Fmagento2-module-log-viewer) | — |
 | [`php-dto`](https://github.com/RubenJ01/php-dto) | `1.2.0` | 2026-04-19 | 146 / 9 | [`rjds/php-dto`](https://packagist.org/packages/rjds%2Fphp-dto) | [docs](projects/php-dto/index.md) |
-| [`php-humanize`](https://github.com/RubenJ01/php-humanize) | `3.1.0` | 2026-04-22 | 1,656 / 285 | [`rjds/php-humanize`](https://packagist.org/packages/rjds%2Fphp-humanize) | [docs](projects/php-humanize/index.md) |
+| [`php-humanize`](https://github.com/RubenJ01/php-humanize) | `3.1.0` | 2026-04-22 | 1,664 / 269 | [`rjds/php-humanize`](https://packagist.org/packages/rjds%2Fphp-humanize) | [docs](projects/php-humanize/index.md) |
 | [`php-slugify`](https://github.com/RubenJ01/php-slugify) | `2.2.0` | 2026-03-21 | 0 / 0 | [`rjds/php-slugify`](https://packagist.org/packages/rjds%2Fphp-slugify) | [docs](projects/php-slugify/index.md) |
